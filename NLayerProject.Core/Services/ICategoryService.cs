@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayerProject.Core.Repository
+namespace NLayerProject.Core.Services
 {
-    public interface ICategoryRepository:IRepository<Category>
+    public interface ICategoryService:IServices<Category>
     {
         Task<Category> GetWithProductByIdAsync(int categoryId);
+        //Category özgü methodlar burada tanımlanır.
     }
 }

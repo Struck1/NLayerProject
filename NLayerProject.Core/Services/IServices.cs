@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayerProject.Core.Repository
+namespace NLayerProject.Core.Services
 {
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IServices<TEntity> where TEntity:class
     {
         Task<TEntity> GetByIdAsync(int id);
 
