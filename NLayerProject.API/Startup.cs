@@ -7,13 +7,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLayerProject.Core.Repository;
+using NLayerProject.Core.Services;
 using NLayerProject.Core.UnitOfWorks;
 using NLayerProject.Data;
+using NLayerProject.Data.Repositories;
 using NLayerProject.Data.UnitOfWorks;
+using NLayerProject.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace NLayerProject.API
 {
@@ -29,6 +34,13 @@ namespace NLayerProject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IServices<>), typeof(Service.Services.Service<>));
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o =>
@@ -37,14 +49,15 @@ namespace NLayerProject.API
                 });
             });
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
             services.AddControllers();
 
-            
+
         }
 
        
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

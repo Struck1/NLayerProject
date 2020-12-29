@@ -23,6 +23,7 @@ namespace NLayerProject.Service.Services
         public async Task<TEntity> AddAsync(TEntity entity)
         {
             await _repository.AddAsync(entity);
+            
             await _unitOfWork.CommitAsync();
             return entity;
         }
