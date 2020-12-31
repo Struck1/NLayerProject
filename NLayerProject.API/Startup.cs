@@ -19,6 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using NLayerProject.API.Filters;
+using UdemyNLayerProject.API.Filters;
+using Microsoft.AspNetCore.Diagnostics;
+using UdemyNLayerProject.API.DTOs;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using NLayerProject.API.Extensions;
 
 namespace NLayerProject.API
 {
@@ -35,6 +42,7 @@ namespace NLayerProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<NotFoundFilter>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IServices<>), typeof(Service.Services.Service<>));
             services.AddScoped<ICategoryService, CategoryService>();
@@ -51,12 +59,21 @@ namespace NLayerProject.API
 
 
 
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                o.Filters.Add(new ValidationFilter());
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
 
 
         }
 
-       
+
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +83,8 @@ namespace NLayerProject.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.Extensions();
 
             app.UseHttpsRedirection();
 

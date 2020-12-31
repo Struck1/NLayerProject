@@ -19,6 +19,7 @@ namespace NLayerProject.Data.UnitOfWorks
         public UnitOfWork(AppDbContext appDbContext)
         {
             _context = appDbContext;
+            
 
         }
         public IProductRepository Products => _productRepository = _productRepository ?? new ProductRepository(_context);
@@ -34,5 +35,7 @@ namespace NLayerProject.Data.UnitOfWorks
         {
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

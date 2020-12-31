@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UdemyNLayerProject.API.DTOs;
 
 namespace NLayerProject.API.Mapping
 {
@@ -20,6 +21,9 @@ namespace NLayerProject.API.Mapping
 
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
+
+            CreateMap<Product, ProductWithCategory>();
+            CreateMap<ProductWithCategory, Product>();
         }
     }
 }

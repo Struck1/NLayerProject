@@ -6,8 +6,9 @@ using UdemyNLayerProject.API.DTOs;
 
 namespace NLayerProject.API.DTOs
 {
-    public class CategoryWithProduct : CategoryDto
+    public class ProductWithCategory : ProductDto
     {
-        public IEnumerable<ProductDto> Products { get; set; }
+        public CategoryDto Category { get; set; }
+
     }
 }
